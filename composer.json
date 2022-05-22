@@ -6,12 +6,10 @@
       "email": "kagiri@sharksight.co.ke"
     }
   ],
+  "require": {},
   "autoload": {
     "psr-4": {
       "kilyte\\": "."
     }
-  },
-  "require": {
-    "vlucas/phpdotenv": "^5.4"
   }
 }
