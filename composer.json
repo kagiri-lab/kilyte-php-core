@@ -1,17 +1,17 @@
 {
-    "name": "kilyte/kilyte-php-core",
-    "authors": [
-        {
-            "name": "Kagiri",
-            "email": "kagiri@sharksight.co.ke"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "app\\": "."
-        }
-    },
-    "require": {
-        "vlucas/phpdotenv": "^5.4"
+  "name": "kilyte/kilyte-php-core",
+  "authors": [
+    {
+      "name": "Kagiri",
+      "email": "kagiri@sharksight.co.ke"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "kilyte\\core\\": "."
+    }
+  },
+  "require": {
+    "vlucas/phpdotenv": "^5.4"
+  }
 }
