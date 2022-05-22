@@ -1,8 +1,8 @@
 <?php
 
-namespace kilytecorecore;
+namespace kilytecore;
 
-use kilytecorecore\db\Database;
+use kilytecore\db\Database;
 
 class Application
 {
