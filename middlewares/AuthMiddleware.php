@@ -1,9 +1,9 @@
 <?php
 
-namespace kilytecore\middlewares;
+namespace kilyte\core\middlewares;
 
-use kilytecore\Application;
-use kilytecore\exception\ForbiddenException;
+use kilyte\core\Application;
+use kilyte\core\exception\ForbiddenException;
 
 class AuthMiddleware extends BaseMiddleware
 {

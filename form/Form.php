@@ -3,7 +3,8 @@
 
 namespace kilytecore\form;
 
-use kilytecore\Model;
+use kilyte\core\form\InputField;
+use kilyte\core\Model;
 
 class Form
 {
