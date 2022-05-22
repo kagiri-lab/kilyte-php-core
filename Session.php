@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\kilytephp;
+namespace kilyte\kilytephpcore;
 
 
 class Session
