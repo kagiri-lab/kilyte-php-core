@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\core\exception;
+namespace kilyte\exception;
 
 use Exception;
 

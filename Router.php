@@ -1,8 +1,8 @@
 <?php
 
-namespace kilyte\core;
+namespace kilyte;
 
-use kilyte\core\exception\NotFoundException;
+use kilyte\exception\NotFoundException;
 
 class Router
 {

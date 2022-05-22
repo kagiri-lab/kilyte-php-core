@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\core;
+namespace kilyte;
 
 class Response
 {

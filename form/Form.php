@@ -1,10 +1,10 @@
 <?php
 
 
-namespace kilyte\core\form;
+namespace kilyte\form;
 
-use kilyte\core\form\InputField;
-use kilyte\core\Model;
+use kilyte\form\InputField;
+use kilyte\Model;
 
 class Form
 {

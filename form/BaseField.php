@@ -1,8 +1,8 @@
 <?php
 
-namespace kilyte\core\form;
+namespace kilyte\form;
 
-use kilyte\core\Model;
+use kilyte\Model;
 
 abstract class BaseField
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\core\form;
+namespace kilyte\form;
 
 class TextareaField extends BaseField
 {
