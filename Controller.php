@@ -1,8 +1,9 @@
 <?php
 
-namespace kilyte\kilytephpcore;
+namespace kilytecore;
 
-use kilyte\kilytephpcore\middlewares\BaseMiddleware;
+use kilytecorecore\Application;
+use kilytecorecore\middlewares\BaseMiddleware;
 
 class Controller
 {

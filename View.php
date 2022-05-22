@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\kilytephpcore;
+namespace kilytecorecore;
 
 
 class View

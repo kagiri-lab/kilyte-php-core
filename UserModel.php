@@ -1,8 +1,8 @@
 <?php
 
-namespace kilyte\kilytephpcore;
+namespace kilytecorecore;
 
-use kilyte\kilytephpcore\db\DbModel;
+use kilytecorecore\db\DbModel;
 
 abstract class UserModel extends DbModel
 {

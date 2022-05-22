@@ -1,8 +1,8 @@
 <?php
 
-namespace kilyte\kilytephpcore\form;
+namespace kilytecorecore\form;
 
-use kilyte\kilytephpcore\Model;
+use kilytecorecore\Model;
 
 class InputField extends BaseField
 {

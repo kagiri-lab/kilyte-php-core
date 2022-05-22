@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\kilytephpcore\middlewares;
+namespace kilytecorecore\middlewares;
 
 abstract class BaseMiddleware
 {

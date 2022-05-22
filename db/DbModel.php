@@ -1,9 +1,9 @@
 <?php
 
-namespace kilyte\kilytephpcore\db;
+namespace kilytecorecore\db;
 
-use kilyte\kilytephpcore\Application;
-use kilyte\kilytephpcore\Model;
+use kilytecorecore\Application;
+use kilytecorecore\Model;
 
 abstract class DbModel extends Model
 {
