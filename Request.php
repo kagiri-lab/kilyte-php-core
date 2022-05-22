@@ -1,6 +1,6 @@
 <?php
 
-namespace shark\kilytephp;
+namespace kilyte\kilytephp;
 
 class Request
 {

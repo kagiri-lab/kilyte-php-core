@@ -1,8 +1,8 @@
 <?php
 
-namespace shark\kilytephp;
+namespace kilyte\kilytephp;
 
-use shark\kilytephp\middlewares\BaseMiddleware;
+use kilyte\kilytephp\middlewares\BaseMiddleware;
 
 class Controller
 {

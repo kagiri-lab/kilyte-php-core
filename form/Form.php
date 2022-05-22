@@ -1,9 +1,9 @@
 <?php
 
 
-namespace shark\kilytephp\form;
+namespace kilyte\kilytephp\form;
 
-use shark\kilytephp\Model;
+use kilyte\kilytephp\Model;
 
 class Form
 {
