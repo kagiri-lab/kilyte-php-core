@@ -2,7 +2,7 @@
 
 namespace kilyte\core;
 
-use kilyte\corecore\db\Database;
+use kilyte\core\db\Database;
 
 class Application
 {
