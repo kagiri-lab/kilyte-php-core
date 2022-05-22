@@ -2,6 +2,7 @@
 
 namespace kilytecore;
 
+use kilyte\Controller;
 use kilytecore\db\Database;
 
 class Application

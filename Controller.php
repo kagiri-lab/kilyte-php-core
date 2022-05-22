@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte;
+namespace kilytecore;
 
 use kilytecore\Application;
 use kilytecore\middlewares\BaseMiddleware;
