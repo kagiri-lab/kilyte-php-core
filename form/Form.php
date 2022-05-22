@@ -1,7 +1,7 @@
 <?php
 
 
-namespace kilytecore\form;
+namespace kilyte\core\form;
 
 use kilyte\core\form\InputField;
 use kilyte\core\Model;
