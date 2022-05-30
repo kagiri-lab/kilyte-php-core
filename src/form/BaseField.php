@@ -11,7 +11,7 @@ abstract class BaseField
     public string $attribute;
     public string $type;
 
-    
+
     public function __construct(Model $model, string $attribute)
     {
         $this->model = $model;
@@ -20,7 +20,8 @@ abstract class BaseField
 
     public function __toString()
     {
-        return sprintf('<div class="form-group">
+        return sprintf(
+            '<div class="form-group">
                 <label>%s</label>
                 %s
                 <div class="invalid-feedback">
