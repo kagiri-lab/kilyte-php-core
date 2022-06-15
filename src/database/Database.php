@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\db;
+namespace kilyte\database;
 
 use kilyte\Application;
 

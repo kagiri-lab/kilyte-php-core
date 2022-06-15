@@ -6,7 +6,8 @@ use kilyte\middlewares\BaseMiddleware;
 
 class Controller
 {
-    public string $layout = 'main';
+
+    public string $layout = 'auth';
     public string $action = '';
 
     protected array $middlewares = [];
@@ -16,9 +17,9 @@ class Controller
         $this->layout = $layout;
     }
 
-    public function render($view, $params = []): string
+    public function render($params = [], $view = null): string
     {
-        return Application::$app->router->renderView($view, $params);
+        return Application::$app->router->renderView($params, $view);
     }
 
     public function registerMiddleware(BaseMiddleware $middleware)
@@ -30,4 +31,6 @@ class Controller
     {
         return $this->middlewares;
     }
+
+    
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte;
+namespace kilyte\Http;
 
 class Request
 {
@@ -9,6 +9,14 @@ class Request
     public function getMethod()
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+
+    public function isWriteRequest(): bool
+    {
+        if (in_array($this->getMethod(), ["POST", 'PUT', 'PATCH', "DELETE"])) {
+            return true;
+        }
+        return false;
     }
 
     public function getUrl()
@@ -31,7 +39,7 @@ class Request
         return $this->getMethod() === 'post';
     }
 
-    public function getBody()
+    public function get($get = null)
     {
         $data = [];
         if ($this->isGet()) {
@@ -44,7 +52,7 @@ class Request
                 $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-        return $data;
+        return (empty($get)) ? $data : $data[$get];
     }
 
     public function setRouteParams($params)

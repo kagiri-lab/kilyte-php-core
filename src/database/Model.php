@@ -1,6 +1,8 @@
 <?php
 
-namespace kilyte;
+namespace kilyte\database;
+
+use kilyte\Application;
 
 class Model
 {

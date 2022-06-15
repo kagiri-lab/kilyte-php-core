@@ -3,8 +3,8 @@
 
 namespace kilyte\form;
 
+use kilyte\database\Model;
 use kilyte\form\InputField;
-use kilyte\Model;
 
 class Form
 {
@@ -23,9 +23,9 @@ class Form
         echo '</form>';
     }
 
-    public function field(Model $model, $attribute)
+    public function field(Model $model, $attribute, $options = [])
     {
-        return new InputField($model, $attribute);
+        return new InputField($model, $attribute, $options);
     }
-
+    
 }

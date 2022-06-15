@@ -2,7 +2,13 @@
 
 namespace kilyte;
 
-use kilyte\db\Database;
+use kilyte\database\Database;
+use kilyte\http\Request;
+use kilyte\http\Response;
+use kilyte\http\Session;
+use kilyte\model\UserModel;
+use kilyte\route\Router;
+use Throwable;
 
 class Application
 {
@@ -14,10 +20,10 @@ class Application
     public static Application $app;
     public static string $ROOT_DIR;
     public string $userClass;
-    public string $layout = 'main';
+    public string $layout = 'auth';
     public Router $router;
-    public Request $request;
-    public Response $response;
+    public ?Request $request;
+    public ?Response $response;
     public ?Controller $controller = null;
     public Database $db;
     public Session $session;
@@ -70,11 +76,11 @@ class Application
     {
         $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try {
-            echo $this->router->resolve();
-        } catch (\Exception $e) {
-            echo $this->router->renderView('_error', [
-                'exception' => $e,
-            ]);
+            $results = $this->router->resolve();
+            $this->response->print_response($results);
+        } catch (Throwable $e) {
+            $results = $this->router->renderError('_error', $e);
+            $this->response->print_response($results);
         }
     }
 
