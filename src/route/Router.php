@@ -131,7 +131,10 @@ class Router
 
     public function renderError($view, Throwable $e)
     {
-        http_response_code($e->getCode());
+        $code = 500;
+        if (is_numeric($e->getCode()))
+            $code = $e->getCode();
+        http_response_code($code);
         if ($this->isAPI) {
             return Application::$app->view->renderView([
                 "type" => get_class($e),
