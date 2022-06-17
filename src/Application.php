@@ -60,6 +60,12 @@ class Application
         try {
             $dotenv = \Dotenv\Dotenv::createImmutable($rootDir);
             $dotenv->load();
+            if (!isset($_ENV['DB_DSN']))
+                throw new KiLyteException("Setup DB Connection");
+            if (!isset($_ENV['DB_USER']))
+                throw new KiLyteException("Setup DB Connection");
+            if (!isset($_ENV['DB_PASSWORD']))
+                throw new KiLyteException("Setup DB Connection");
             $config = [
                 'db' => [
                     'dsn' => $_ENV['DB_DSN'],
