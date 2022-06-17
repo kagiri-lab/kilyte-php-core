@@ -15,9 +15,6 @@ use kilyte\route\Router;
 use Throwable;
 
 
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
 class Application
 {
     const EVENT_BEFORE_REQUEST = 'beforeRequest';
