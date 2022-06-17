@@ -2,13 +2,21 @@
 
 namespace kilyte;
 
+use Exception;
 use kilyte\database\Database;
+use kilyte\exception\DatabaseException;
+use kilyte\exception\DynamicException;
+use kilyte\exception\KiLyteException;
 use kilyte\http\Request;
 use kilyte\http\Response;
 use kilyte\http\Session;
 use kilyte\model\UserModel;
 use kilyte\route\Router;
 use Throwable;
+
+
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 class Application
 {
@@ -30,23 +38,42 @@ class Application
     public View $view;
     public ?UserModel $user;
 
-    public function __construct($rootDir, $config)
+    public function __construct($rootDir)
     {
+        set_exception_handler(array($this, 'kilyteExceptionHandler'));
         $this->user = null;
-        $this->userClass = $config['userClass'];
+        $this->userClass = \app\models\User::class;
         self::$ROOT_DIR = $rootDir;
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
-        $this->db = new Database($config['db']);
         $this->session = new Session();
         $this->view = new View();
-
+        $this->db = new Database($this->loadConfig($rootDir)['db']);
         $userId = Application::$app->session->get('user');
         if ($userId) {
             $key = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$key => $userId]);
+        }
+    }
+
+    public function loadConfig($rootDir)
+    {
+        try {
+            $dotenv = \Dotenv\Dotenv::createImmutable($rootDir);
+            $dotenv->load();
+            $config = [
+                'db' => [
+                    'dsn' => $_ENV['DB_DSN'],
+                    'user' => $_ENV['DB_USER'],
+                    'password' => $_ENV['DB_PASSWORD'],
+                ]
+            ];
+
+            return $config;
+        } catch (Exception $ex) {
+            throw new KiLyteException($ex->getMessage());
         }
     }
 
@@ -95,5 +122,11 @@ class Application
     public function on($eventName, $callback)
     {
         $this->eventListeners[$eventName][] = $callback;
+    }
+
+    public function kilyteExceptionHandler(Throwable $exception)
+    {
+        $results = $this->router->renderError('_error', $exception);
+        $this->response->print_response($results);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace kilyte\database;
 
+use Exception;
 use kilyte\Application;
+use kilyte\exception\KiLyteException;
 
 class Database
 {
@@ -10,12 +12,16 @@ class Database
 
     public function __construct($dbConfig = [])
     {
-        $dbDsn = $dbConfig['dsn'] ?? '';
-        $username = $dbConfig['user'] ?? '';
-        $password = $dbConfig['password'] ?? '';
+        try {
+            $dbDsn = $dbConfig['dsn'] ?? '';
+            $username = $dbConfig['user'] ?? '';
+            $password = $dbConfig['password'] ?? '';
 
-        $this->pdo = new \PDO($dbDsn, $username, $password);
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->pdo = new \PDO($dbDsn, $username, $password);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (Exception $ex) {
+            throw new KiLyteException($ex->getMessage());
+        }
     }
 
     public function applyMigrations()
@@ -66,7 +72,7 @@ class Database
 
     protected function saveMigrations(array $newMigrations)
     {
-        $str = implode(',', array_map(fn($m) => "('$m')", $newMigrations));
+        $str = implode(',', array_map(fn ($m) => "('$m')", $newMigrations));
         $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES 
             $str
         ");
@@ -82,4 +88,4 @@ class Database
     {
         echo "[" . date("Y-m-d H:i:s") . "] - " . $message . PHP_EOL;
     }
-} 
+}

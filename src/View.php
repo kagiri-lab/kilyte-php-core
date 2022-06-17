@@ -22,10 +22,19 @@ class View
             $viewContent = $this->renderViewOnly($params, $view);
             ob_start();
             include_once Application::$ROOT_DIR . "/views/layouts/$layoutName.php";
+            $site_name = "KiLyte";
+            $site_url = "http://localhost/";
+            if (isset($_ENV)) {
+                if (isset($_ENV['SITE_NAME']))
+                    $site_name = $_ENV['SITE_NAME'];
+                if (isset($_ENV['SITE_URL']))
+                    $site_url = $_ENV['SITE_URL'];
+            }
+            print_r($site_url);
             $layoutContent = ob_get_clean();
             $layoutContent = str_replace('{{content}}', $viewContent, $layoutContent);
-            $layoutContent = str_replace('{{site-name}}', $_ENV['SITE_NAME'], $layoutContent);
-            return str_replace('{{site-url}}', $_ENV['SITE_URL'], $layoutContent);
+            $layoutContent = str_replace('{{site-name}}', $site_name, $layoutContent);
+            return str_replace('{{site-url}}', $site_url, $layoutContent);
         }
     }
 
