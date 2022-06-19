@@ -17,10 +17,6 @@ class Block1 extends BaseBlock
 
     public function renderBlock()
     {
-        $attributes = [];
-        foreach ($this->options as $key => $value) {
-            $attributes[] = "$key=\"$value\"";
-        }
         return sprintf(
             '<div class="col-12 label">%s</div>
             <div class="col-12">%s</div>

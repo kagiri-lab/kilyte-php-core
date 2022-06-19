@@ -11,6 +11,7 @@ abstract class BaseBlock
     public string $attribute;
     public array $options = [];
     public string $visible = '';
+    public int $size = 12;
 
 
     public function __construct(Model $model, string $attribute, $options = [])
@@ -22,10 +23,12 @@ abstract class BaseBlock
 
     public function __toString()
     {
+        if (isset($this->options['size']))
+            $this->size = $this->options['size'];
         return sprintf(
-            '<div class="col-12">
+            "<div class='col-$this->size'>
                 %s
-            </div>',
+            </div>",
             $this->renderBlock()
         );
     }
