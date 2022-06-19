@@ -27,5 +27,9 @@ class Form
     {
         return new InputField($model, $attribute, $options);
     }
-    
+
+    public function textAreaField(Model $model, $attribute, $options = [])
+    {
+        return new TextareaField($model, $attribute, $options);
+    }
 }
