@@ -5,7 +5,7 @@ namespace kilyte\controls;
 
 use kilyte\database\Model;
 
-class Block1 extends BaseBlock
+class CardBlock extends BaseBlock
 {
 
 
@@ -18,9 +18,7 @@ class Block1 extends BaseBlock
     public function renderBlock()
     {
         return sprintf(
-            '<div class="col-12 label">%s</div>
-            <div class="col-12">%s</div>
-            ',
+            "<h1 class='card-title'>%s</h1> <p>%s</p>",
             $this->model->getLabel($this->attribute),
             $this->model->{$this->attribute}
         );
