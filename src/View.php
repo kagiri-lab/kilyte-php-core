@@ -19,6 +19,7 @@ class View
             if (Application::$app->controller) {
                 $layoutName = Application::$app->controller->layout;
             }
+            $layoutName = str_replace('.', '/', $layoutName);
             $viewContent = $this->renderViewOnly($params, $view);
             ob_start();
             include_once Application::$ROOT_DIR . "/views/layouts/$layoutName.php";
@@ -30,7 +31,6 @@ class View
                 if (isset($_ENV['SITE_URL']))
                     $site_url = $_ENV['SITE_URL'];
             }
-            print_r($site_url);
             $layoutContent = ob_get_clean();
             $layoutContent = str_replace('{{content}}', $viewContent, $layoutContent);
             $layoutContent = str_replace('{{site-name}}', $site_name, $layoutContent);
