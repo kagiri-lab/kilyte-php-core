@@ -109,7 +109,7 @@ class Application
             $results = $this->router->resolve();
             $this->response->print_response($results);
         } catch (Throwable $e) {
-            $results = $this->router->renderError('_error', $e);
+            $results = $this->router->renderError('error.view', $e);
             $this->response->print_response($results);
         }
     }
