@@ -25,7 +25,7 @@ class Application
     public static Application $app;
     public static string $ROOT_DIR;
     public string $userClass;
-    public string $layout = 'auth';
+    public string $layout;
     public Router $router;
     public ?Request $request;
     public ?Response $response;
@@ -35,8 +35,9 @@ class Application
     public View $view;
     public ?UserModel $user;
 
-    public function __construct($rootDir)
+    public function __construct($rootDir, $customLayout = 'auth')
     {
+        $this->layout = $customLayout;
         set_exception_handler(array($this, 'kilyteExceptionHandler'));
         $this->user = null;
         $this->userClass = \app\models\User::class;
