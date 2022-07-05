@@ -129,7 +129,7 @@ class Application
 
     public function kilyteExceptionHandler(Throwable $exception)
     {
-        $results = $this->router->renderError('_error', $exception);
+        $results = $this->router->renderError('error.view', $exception);
         $this->response->print_response($results);
     }
 }
