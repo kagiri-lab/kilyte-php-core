@@ -16,25 +16,24 @@ class View
             return $params;
         } else {
             $layoutName = Application::$app->layout;
-            if (Application::$app->controller) {
+            if (Application::$app->controller && !str_contains($view, 'error')) {
                 $layoutName = Application::$app->controller->layout;
+                $layoutName = str_replace('.', '/', $layoutName);
+                $viewContent = $this->renderViewOnly($params, $view);
+                return $this->mergeView($viewContent, $layoutName);
+            } else {
+                $exception = $params['exception'];
+                $error = [
+                    "code" => $exception->getCode(),
+                    "message" => $exception->getMessage(),
+                    "line" => $exception->getLine(),
+                    "file" => $exception->getFile(),
+                    "trace" => $exception->getTrace()
+                ];
+                $layoutName = "layout";
+                $viewContent = $this->renderViewOnly(["error" => $error], $view);
+                return $this->mergeView($viewContent, $layoutName);
             }
-            $layoutName = str_replace('.', '/', $layoutName);
-            $viewContent = $this->renderViewOnly($params, $view);
-            ob_start();
-            include_once Application::$ROOT_DIR . "/views/layouts/$layoutName.php";
-            $site_name = "KiLyte";
-            $site_url = "http://localhost/";
-            if (isset($_ENV)) {
-                if (isset($_ENV['SITE_NAME']))
-                    $site_name = $_ENV['SITE_NAME'];
-                if (isset($_ENV['SITE_URL']))
-                    $site_url = $_ENV['SITE_URL'];
-            }
-            $layoutContent = ob_get_clean();
-            $layoutContent = str_replace('{{content}}', $viewContent, $layoutContent);
-            $layoutContent = str_replace('{{site-name}}', $site_name, $layoutContent);
-            return str_replace('{{site-url}}', $site_url, $layoutContent);
         }
     }
 
@@ -47,5 +46,23 @@ class View
         $view = str_replace('.', '/', $view);
         include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();
+    }
+
+    public function mergeView($viewContent, $layoutName)
+    {
+        ob_start();
+        include_once Application::$ROOT_DIR . "/views/layouts/$layoutName.php";
+        $site_name = "KiLyte";
+        $site_url = "http://localhost/";
+        if (isset($_ENV)) {
+            if (isset($_ENV['SITE_NAME']))
+                $site_name = $_ENV['SITE_NAME'];
+            if (isset($_ENV['SITE_URL']))
+                $site_url = $_ENV['SITE_URL'];
+        }
+        $layoutContent = ob_get_clean();
+        $layoutContent = str_replace('{{content}}', $viewContent, $layoutContent);
+        $layoutContent = str_replace('{{site-name}}', $site_name, $layoutContent);
+        return str_replace('{{site-url}}', $site_url, $layoutContent);
     }
 }

@@ -7,7 +7,7 @@ use kilyte\middlewares\BaseMiddleware;
 class Controller
 {
 
-    public string $layout = 'auth';
+    public string $layout = 'layout';
     public string $action = '';
 
     protected array $middlewares = [];
