@@ -39,6 +39,7 @@ class Application
     {
         $this->layout = $customLayout;
         set_exception_handler(array($this, 'kilyteExceptionHandler'));
+        set_error_handler(array($this, "kilyteErrorHandler"));
         $this->user = null;
         $this->userClass = \app\models\User::class;
         self::$ROOT_DIR = $rootDir;
@@ -132,5 +133,10 @@ class Application
     {
         $results = $this->router->renderError('error.view', $exception);
         $this->response->print_response($results);
+    }
+
+    function kilyteErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+        throw new KiLyteException($errstr, $errno, $errline, $errfile, $errstr);
     }
 }
