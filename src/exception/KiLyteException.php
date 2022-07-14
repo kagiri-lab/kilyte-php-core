@@ -9,19 +9,11 @@ class KiLyteException extends Exception
 
     protected $code = 500;
     protected $message = "Connection Error";
-    protected int $line = 0;
-    protected string $file = "";
-    protected $string = "";
 
-    public function __construct($message = null, $code = 500, $line = 0, $file = null, $string = null)
+    public function __construct($message = null, $code = 500)
     {
         if ($message)
             $this->message = $message;
         $this->code = $code;
-        $this->line = $line;
-        if ($file)
-            $this->file = $file;
-        if ($string)
-            $this->string = $string;
     }
 }

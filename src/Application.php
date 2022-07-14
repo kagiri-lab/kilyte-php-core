@@ -137,6 +137,6 @@ class Application
 
     function kilyteErrorHandler($errno, $errstr, $errfile, $errline)
     {
-        throw new KiLyteException($errstr, $errno, $errline, $errfile, $errstr);
+        throw new KiLyteException($errstr, $errno);
     }
 }

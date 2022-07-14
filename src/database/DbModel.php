@@ -60,6 +60,32 @@ abstract class DbModel extends Model
         return $statement->fetchObject(static::class);
     }
 
+    public static function find(array $where, array $columns = [], $limit = null)
+    {
+
+        $tableName = static::tableName();
+        $columnList = "*";
+        $limitList = 20;
+        if (!empty($columns)) {
+            $columnList = implode(",", $columns);
+        }
+        if (!empty($limit)) {
+            if (is_array($limit))
+                $limitList = implode(',', $limit);
+            else
+                $limitList = $limit;
+        }
+
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql LIMIT $limitList");
+        foreach ($where as $key => $item)
+            $statement->bindValue(":$key", $item);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public static function getAll(array $columns = [], $limit = null)
     {
         $tableName = static::tableName();
