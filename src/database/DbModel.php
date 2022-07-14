@@ -33,7 +33,7 @@ abstract class DbModel extends Model
         $attributes = array_keys($set);
         $select = array_keys($where);
         $sql = implode(",", array_map(fn ($attr) => "$attr = :$attr", $attributes));
-        $select_from = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $select));
+        $select_from = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $select));
         $statement = self::prepare("UPDATE $tableName SET $sql WHERE $select_from");
         foreach ($set as $key => $item)
             $statement->bindValue(":$key", $item);
@@ -52,7 +52,7 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
@@ -78,7 +78,7 @@ abstract class DbModel extends Model
 
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql LIMIT $limitList");
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
