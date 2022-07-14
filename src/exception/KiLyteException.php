@@ -19,7 +19,9 @@ class KiLyteException extends Exception
             $this->message = $message;
         $this->code = $code;
         $this->line = $line;
-        $this->file = $file;
-        $this->string = $string;
+        if ($file)
+            $this->file = $file;
+        if ($string)
+            $this->string = $string;
     }
 }
