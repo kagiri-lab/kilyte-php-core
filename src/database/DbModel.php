@@ -65,7 +65,7 @@ abstract class DbModel extends Model
 
         $tableName = static::tableName();
         $columnList = "*";
-        $limitList = 20;
+        $limitList = 0;
         if (!empty($columns)) {
             $columnList = implode(",", $columns);
         }
@@ -80,6 +80,8 @@ abstract class DbModel extends Model
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql LIMIT $limitList");
+        if (empty($limitList))
+            $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql");
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
@@ -90,7 +92,7 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $columnList = "*";
-        $limitList = 20;
+        $limitList = 0;
         if (!empty($columns)) {
             $columnList = implode(",", $columns);
         }
@@ -101,6 +103,8 @@ abstract class DbModel extends Model
                 $limitList = $limit;
         }
         $statement = self::prepare("SELECT $columnList FROM $tableName LIMIT $limitList");
+        if (empty($limitList))
+            $statement = self::prepare("SELECT $columnList FROM $tableName");
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
