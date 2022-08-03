@@ -8,7 +8,7 @@ class HTML
     public static function start()
     {
         echo "    <!DOCTYPE html> \n    ";
-        echo "<html lang='en-US' dir='ltr'> \n    ";
+        echo "    <html lang='en-US' dir='ltr'> \n    ";
     }
 
     public static function end()
@@ -60,10 +60,9 @@ class HTML
 
     public static function Script(array $scripts)
     {
-        if (!empty($scripts)) {
+        if (!empty($scripts))
             foreach ($scripts as $script)
                 echo "<script src='$script'></script> \n    ";
-        }
     }
 
     public static function header_start()
