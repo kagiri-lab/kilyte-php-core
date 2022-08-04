@@ -105,6 +105,8 @@ abstract class DbModel extends Model
         $statement = "SELECT $columnList FROM $tableName ORDER BY id DESC";
         if (!empty($limitList))
             $statement = self::prepare("$statement LIMIT $limitList");
+        else
+            $statement = self::prepare("$statement");
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
