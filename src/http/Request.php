@@ -70,4 +70,12 @@ class Request
     {
         return $this->routeParams[$param] ?? $default;
     }
+
+    public function getHeader($get = null)
+    {
+        $data = [];
+        foreach ($_SERVER as $key => $value)
+            $data[$key] = filter_input(INPUT_SERVER, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        return (empty($get)) ? $data : $data[$get];
+    }
 }
