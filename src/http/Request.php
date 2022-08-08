@@ -52,7 +52,11 @@ class Request
                 $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-        return (empty($get)) ? $data : $data[$get];
+        if (!empty($get)) {
+            if (key_exists($get, $data))
+                return $data[$get];
+        } else
+            return $data;
     }
 
     public function setRouteParams($params)
@@ -76,6 +80,26 @@ class Request
         $data = [];
         foreach ($_SERVER as $key => $value)
             $data[$key] = filter_input(INPUT_SERVER, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-        return (empty($get)) ? $data : $data[$get];
+        if (!empty($get)) {
+            if (key_exists($get, $data))
+                return $data[$get];
+        } else
+            return $data;
+    }
+
+    public function getJsonData($get = null)
+    {
+        $data = [];
+        $content = file_get_contents('php://input');
+        if (!empty($content)) {
+            $content = json_decode($content);
+            foreach ($content as $key => $value)
+                $data[$key] = $value;
+            if (!empty($get)) {
+                if (key_exists($get, $data))
+                    return $data[$get];
+            } else
+                return $data;
+        }
     }
 }
