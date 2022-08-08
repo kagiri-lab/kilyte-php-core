@@ -27,9 +27,9 @@ abstract class DbModel extends Model
         return true;
     }
 
-    public function update(array $set, array $where)
+    public static function update(array $set, array $where)
     {
-        $tableName = $this->tableName();
+        $tableName = static::tableName();
         $attributes = array_keys($set);
         $select = array_keys($where);
         $sql = implode(",", array_map(fn ($attr) => "$attr = :$attr", $attributes));
