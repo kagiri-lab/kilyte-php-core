@@ -53,7 +53,9 @@ class Application
         $userId = Application::$app->session->get('user');
         if ($userId) {
             $key = $this->userClass::primaryKey();
-            $this->user = $this->userClass::findOne([$key => $userId]);
+            $cUser = $this->userClass::findOne([$key => $userId]);
+            if ($cUser)
+                $this->user = $cUser;
         }
     }
 
