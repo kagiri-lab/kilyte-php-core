@@ -79,9 +79,11 @@ abstract class DbModel extends Model
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
-        $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql LIMIT $limitList");
-        if (empty($limitList))
-            $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql");
+        $statement = "SELECT $columnList FROM $tableName WHERE $sql ORDER BY id DESC";
+        if (!empty($limitList))
+            $statement = "$statement LIMIT $limitList";
+
+        $statement = self::prepare($statement);
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
@@ -104,9 +106,8 @@ abstract class DbModel extends Model
         }
         $statement = "SELECT $columnList FROM $tableName ORDER BY id DESC";
         if (!empty($limitList))
-            $statement = self::prepare("$statement LIMIT $limitList");
-        else
-            $statement = self::prepare("$statement");
+            $statement = "$statement LIMIT $limitList";
+        $statement = self::prepare($statement);
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
