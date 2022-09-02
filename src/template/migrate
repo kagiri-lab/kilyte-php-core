@@ -1,0 +1,22 @@
+<?php
+
+use kilyte\Application;
+
+class m_{{table_name}} {
+    public function up()
+    {
+        $db = Application::$app->db;
+        $SQL = "CREATE TABLE {{table_name}} (
+                {{table_columns}}
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )  ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+    }
+
+    public function down()
+    {
+        $db = Application::$app->db;
+        $SQL = "DROP TABLE {{table_name}};";
+        $db->pdo->exec($SQL);
+    }
+}
