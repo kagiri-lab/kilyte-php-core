@@ -55,8 +55,8 @@ abstract class DbModel extends Model
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $order = '';
         if ($orderBy) {
-            $by = $order['by'];
-            $order = $order['order'];
+            $by = $orderBy['by'];
+            $order = $orderBy['order'];
             $order = " ORDER BY $by $order";
         }
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql $order");
@@ -84,8 +84,8 @@ abstract class DbModel extends Model
 
         $order = ' ORDER BY id DESC';
         if ($orderBy) {
-            $by = $order['by'];
-            $order = $order['order'];
+            $by = $orderBy['by'];
+            $order = $orderBy['order'];
             $order = " ORDER BY $by $order";
         }
 
@@ -120,8 +120,8 @@ abstract class DbModel extends Model
 
         $order = ' ORDER BY id DESC';
         if ($orderBy) {
-            $by = $order['by'];
-            $order = $order['order'];
+            $by = $orderBy['by'];
+            $order = $orderBy['order'];
             $order = " ORDER BY $by $order";
         }
 
