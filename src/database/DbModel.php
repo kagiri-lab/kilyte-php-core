@@ -48,19 +48,25 @@ abstract class DbModel extends Model
         return Application::$app->db->prepare($sql);
     }
 
-    public static function findOne(array $where)
+    public static function findOne(array $where, array $orderBy = [])
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
-        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        $order = '';
+        if ($orderBy) {
+            $by = $order['by'];
+            $order = $order['order'];
+            $order = " ORDER BY $by $order";
+        }
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql $order");
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
         return $statement->fetchObject(static::class);
     }
 
-    public static function find(array $where, array $columns = [], $limit = null)
+    public static function find(array $where, array $columns = [], array $orderBy = [], $limit = null)
     {
 
         $tableName = static::tableName();
@@ -76,10 +82,17 @@ abstract class DbModel extends Model
                 $limitList = $limit;
         }
 
+        $order = ' ORDER BY id DESC';
+        if ($orderBy) {
+            $by = $order['by'];
+            $order = $order['order'];
+            $order = " ORDER BY $by $order";
+        }
+
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
-        $statement = "SELECT $columnList FROM $tableName WHERE $sql ORDER BY id DESC";
+        $statement = "SELECT $columnList FROM $tableName WHERE $sql $order";
         if (!empty($limitList))
             $statement = "$statement LIMIT $limitList";
 
@@ -90,7 +103,7 @@ abstract class DbModel extends Model
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public static function getAll(array $columns = [], $limit = null)
+    public static function getAll(array $columns = [], array $orderBy = [], $limit = null)
     {
         $tableName = static::tableName();
         $columnList = "*";
@@ -104,7 +117,15 @@ abstract class DbModel extends Model
             else
                 $limitList = $limit;
         }
-        $statement = "SELECT $columnList FROM $tableName ORDER BY id DESC";
+
+        $order = ' ORDER BY id DESC';
+        if ($orderBy) {
+            $by = $order['by'];
+            $order = $order['order'];
+            $order = " ORDER BY $by $order";
+        }
+
+        $statement = "SELECT $columnList FROM $tableName $order";
         if (!empty($limitList))
             $statement = "$statement LIMIT $limitList";
         $statement = self::prepare($statement);
