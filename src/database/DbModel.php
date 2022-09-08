@@ -34,7 +34,8 @@ abstract class DbModel extends Model
         $select = array_keys($where);
         $sql = implode(",", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $select_from = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $select));
-        $statement = self::prepare("UPDATE $tableName SET $sql WHERE $select_from");
+        $updated_at = date('Y-m-d H:i:s');
+        $statement = self::prepare("UPDATE $tableName SET $sql updated_at=$updated_at WHERE $select_from");
         foreach ($set as $key => $item)
             $statement->bindValue(":$key", $item);
 
@@ -102,6 +103,24 @@ abstract class DbModel extends Model
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+
+    public static function countRow(array $where)
+    {
+
+        $tableName = static::tableName();
+        $columnList = "count(*)";
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $statement = "SELECT $columnList FROM $tableName WHERE $sql";
+        $statement = self::prepare($statement);
+        foreach ($where as $key => $item)
+            $statement->bindValue(":$key", $item);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 
     public static function getAll(array $columns = [], array $orderBy = [], $limit = null)
     {
