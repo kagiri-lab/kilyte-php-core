@@ -35,14 +35,15 @@ abstract class DbModel extends Model
         $sql = implode(",", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $select_from = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $select));
         $updated_at = date('Y-m-d H:i:s');
-        $statement = self::prepare("UPDATE $tableName SET $sql `updated_at`=$updated_at WHERE $select_from");
+        $statement = self::prepare("UPDATE $tableName SET $sql WHERE $select_from");
         print_r($statement);
-        
+
         foreach ($set as $key => $item)
             $statement->bindValue(":$key", $item);
 
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
+        print_r($statement);
         return $statement->execute();
     }
 
