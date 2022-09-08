@@ -30,20 +30,16 @@ abstract class DbModel extends Model
     public static function update(array $set, array $where)
     {
         $tableName = static::tableName();
+        $set['updated_at'] = date('Y-m-d H:i:s');
         $attributes = array_keys($set);
         $select = array_keys($where);
         $sql = implode(",", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $select_from = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $select));
-        $updated_at = date('Y-m-d H:i:s');
         $statement = self::prepare("UPDATE $tableName SET $sql WHERE $select_from");
-        print_r($statement);
-
         foreach ($set as $key => $item)
             $statement->bindValue(":$key", $item);
-
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
-        print_r($statement);
         return $statement->execute();
     }
 
