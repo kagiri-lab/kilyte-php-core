@@ -106,18 +106,22 @@ abstract class DbModel extends Model
 
     public static function countRow(array $where)
     {
-
         $tableName = static::tableName();
         $columnList = "count(*)";
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
-        $statement = "SELECT $columnList FROM $tableName WHERE $sql";
+        if ($where) {
+            $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+            $sql = "WHERE $sql";
+        } else
+            $sql = '';
+        $statement = "SELECT $columnList FROM $tableName $sql";
         $statement = self::prepare($statement);
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        if ($response) return $response[0][$columnList];
     }
 
 
