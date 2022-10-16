@@ -20,11 +20,9 @@ abstract class DbModel extends Model
         $params = array_map(fn ($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") 
                 VALUES (" . implode(",", $params) . ")");
-        foreach ($attributes as $attribute) {
+        foreach ($attributes as $attribute)
             $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-        $statement->execute();
-        return true;
+        return $statement->execute();
     }
 
     public static function update(array $set, array $where)
@@ -104,7 +102,7 @@ abstract class DbModel extends Model
     }
 
 
-    public static function countRow(array $where)
+    public static function countRow(array $where = [])
     {
         $tableName = static::tableName();
         $columnList = "count(*)";
