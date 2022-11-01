@@ -122,6 +122,13 @@ abstract class DbModel extends Model
         if ($response) return $response[0][$columnList];
     }
 
+    public static function rawQuery(string $statement)
+    {
+        $statement = self::prepare($statement);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 
     public static function getAll(array $columns = [], array $orderBy = [], $limit = null)
     {
