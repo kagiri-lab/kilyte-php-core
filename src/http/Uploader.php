@@ -1,6 +1,6 @@
 <?php
 
-namespace kilyte\Http;
+namespace kilyte\http;
 
 use Exception;
 use kilyte\Application;
