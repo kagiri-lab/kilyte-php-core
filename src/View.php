@@ -11,8 +11,18 @@ class View
     {
         if (Application::$app->router->isAPI) {
             header("Content-type: application/json; charset=utf-8");
-            if (is_array($params))
+            if (is_array($params)) {
+                $debug = "false";
+                if (isset($_ENV["DEBUG"]))
+                    $debug = $_ENV["DEBUG"];
+
+                if (strtolower($debug) != 'true') {
+                    unset($params['type']);
+                    unset($params['file']);
+                    unset($params['line']);
+                }
                 return json_encode($params);
+            }
             return $params;
         } else {
             $layoutName = Application::$app->layout;
