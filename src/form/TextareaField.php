@@ -2,8 +2,19 @@
 
 namespace kilyte\form;
 
+use kilyte\database\Model;
+
 class TextareaField extends BaseField
 {
+
+    const IS_REQUIRED = '';
+
+    public function __construct(Model $model, string $attribute, $options)
+    {
+        $this->isRequired = self::IS_REQUIRED;
+        parent::__construct($model, $attribute, $options);
+    }
+
     public function renderInput()
     {
         $attributes = [];
@@ -11,12 +22,12 @@ class TextareaField extends BaseField
             $attributes[] = "$key=\"$value\"";
         }
         return sprintf(
-            '<textarea class="form-control%s" name="%s">%s</textarea>',
+            '<textarea class="form-control%s" name="%s" %s %s>%s</textarea>',
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->attribute,
-            $this->model->{$this->attribute},
-            $this->isRequired,
             implode(" ", $attributes),
+            $this->isRequired,
+            $this->model->{$this->attribute},
         );
     }
 
