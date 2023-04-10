@@ -32,4 +32,9 @@ class Form
     {
         return new TextareaField($model, $attribute, $options);
     }
+
+    public function tinymceTextareaField(Model $model, $attribute, $options = [])
+    {
+        return new TinymceTextareaField($model, $attribute, $options);
+    }
 }
