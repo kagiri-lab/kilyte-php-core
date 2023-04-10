@@ -15,6 +15,8 @@ class TextareaField extends BaseField
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->attribute,
             $this->model->{$this->attribute},
+            $this->isRequired,
+            implode(" ", $attributes),
         );
     }
 
