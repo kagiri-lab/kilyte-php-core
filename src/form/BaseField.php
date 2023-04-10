@@ -12,6 +12,7 @@ abstract class BaseField
     public string $type;
     public array $options = [];
     public string $visible = '';
+    public string $isRequired = '';
 
 
     public function __construct(Model $model, string $attribute, $options = [])

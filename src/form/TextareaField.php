@@ -12,4 +12,22 @@ class TextareaField extends BaseField
             $this->model->{$this->attribute},
         );
     }
+
+    public function isRequired()
+    {
+        $this->isRequired = 'required="true"';
+        return $this;
+    }
+
+    public function show()
+    {
+        $this->visible = '';
+        echo $this;
+    }
+
+    public function hidden()
+    {
+        $this->visible = 'd-none';
+        echo $this;
+    }
 }
