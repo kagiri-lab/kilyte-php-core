@@ -31,7 +31,7 @@ class Migration extends Controller
                         } else {
                             $columntype = $md->columnType();
                             if (isset($columntype[$ms]))
-                                $columns .= self::createText($ms);
+                                $columns .= self::createWithType($ms, $columntype[$ms]);
                             else
                                 $columns .= self::createString($ms);
                         }
@@ -54,9 +54,9 @@ class Migration extends Controller
         return "$column VARCHAR(255) NOT NULL,";
     }
 
-    public static function createText($column)
+    public static function createWithType($column, $colType)
     {
-        return "$column text,";
+        return "$column $colType,";
     }
 
     public static function createID()
