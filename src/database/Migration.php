@@ -28,8 +28,13 @@ class Migration extends Controller
                                 $columns = self::createID();
                             else
                                 $columns = self::createString($ms);
-                        } else
-                            $columns .= self::createString($ms);
+                        } else {
+                            $columntype = $md->columnType();
+                            if (isset($columntype[$ms]))
+                                $columns .= self::createText($ms);
+                            else
+                                $columns .= self::createString($ms);
+                        }
                     }
                 }
 
@@ -47,6 +52,11 @@ class Migration extends Controller
     public static function createString($column)
     {
         return "$column VARCHAR(255) NOT NULL,";
+    }
+
+    public static function createText($column)
+    {
+        return "$column text,";
     }
 
     public static function createID()

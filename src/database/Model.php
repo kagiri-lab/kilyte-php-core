@@ -34,6 +34,11 @@ class Model
         return [];
     }
 
+    public function columnType()
+    {
+        return [];
+    }
+
     public function getLabel($attribute)
     {
         return $this->labels()[$attribute] ?? $attribute;
