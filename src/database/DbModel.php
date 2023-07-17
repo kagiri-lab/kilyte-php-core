@@ -177,4 +177,9 @@ abstract class DbModel extends Model
         $results = self::findOne($where);
         return ($results) ? true : false;
     }
+
+    public static function lastInsertId()
+    {
+        return Application::$app->db->pdo->lastInsertId();
+    }
 }
