@@ -2,6 +2,9 @@
 
 namespace kilyte;
 
+use kilyte\database\Database;
+use kilyte\Http\Request;
+use kilyte\http\Response;
 use kilyte\middlewares\BaseMiddleware;
 
 class Controller
@@ -32,5 +35,28 @@ class Controller
         return $this->middlewares;
     }
 
-    
+    public function request(): Request
+    {
+        return Application::$app->request;
+    }
+
+    public function response(): Response
+    {
+        return Application::$app->response;
+    }
+
+    public function db(): Database
+    {
+        return Application::$app->db;
+    }
+
+    public function env(): array
+    {
+        return $_ENV;
+    }
+
+    public function user()
+    {
+        return Application::$app->user;
+    }
 }
