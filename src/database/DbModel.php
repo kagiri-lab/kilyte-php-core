@@ -65,7 +65,14 @@ abstract class DbModel extends Model
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
-        return $statement->fetchObject(static::class);
+        $result = $statement->fetchObject(static::class);
+        if ($result) {
+            foreach ($result as $rs => $r) {
+                if (!in_array($rs, $columns))
+                    unset($result->$rs);
+            }
+        }
+        return $result;
     }
 
     public static function find(array $where, array $columns = [], array $orderBy = [], $limit = null)
