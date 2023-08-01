@@ -46,9 +46,13 @@ abstract class DbModel extends Model
         return Application::$app->db->prepare($sql);
     }
 
-    public static function findOne(array $where, array $orderBy = [])
+    public static function findOne(array $where, array $columns = [], array $orderBy = [])
     {
         $tableName = static::tableName();
+        $columnList = "*";
+        if (!empty($columns)) {
+            $columnList = implode(",", $columns);
+        }
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $order = '';
@@ -57,7 +61,7 @@ abstract class DbModel extends Model
             $order = $orderBy['order'];
             $order = " ORDER BY $by $order";
         }
-        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql $order");
+        $statement = self::prepare("SELECT $columnList FROM $tableName WHERE $sql $order");
         foreach ($where as $key => $item)
             $statement->bindValue(":$key", $item);
         $statement->execute();
