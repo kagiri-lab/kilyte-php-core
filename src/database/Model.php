@@ -99,7 +99,7 @@ class Model
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
-            self::RULE_UNIQUE => 'Record with with this {field} already exists',
+            self::RULE_UNIQUE => 'Record with this {field} already exists',
         ];
     }
 
@@ -110,7 +110,10 @@ class Model
 
     protected function addErrorByRule(string $attribute, string $rule, $params = [])
     {
-        $params['field'] ??= $attribute;
+        if (isset($this->labels()[$attribute]))
+            $params['field'] ??= $this->labels()[$attribute];
+        else
+            $params['field'] ??= $attribute;
         $errorMessage = $this->errorMessage($rule);
         foreach ($params as $key => $value) {
             $errorMessage = str_replace("{{$key}}", $value, $errorMessage);
