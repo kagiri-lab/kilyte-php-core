@@ -68,8 +68,10 @@ abstract class DbModel extends Model
         $result = $statement->fetchObject(static::class);
         if ($result) {
             foreach ($result as $rs => $r) {
-                if (!in_array($rs, $columns))
-                    unset($result->$rs);
+                if ($columns) {
+                    if (!in_array($rs, $columns))
+                        unset($result->$rs);
+                }
             }
         }
         return $result;
