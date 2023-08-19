@@ -66,9 +66,9 @@ abstract class DbModel extends Model
             $statement->bindValue(":$key", $item);
         $statement->execute();
         $result = $statement->fetchObject(static::class);
-        if ($result) {
-            foreach ($result as $rs => $r) {
-                if ($columns) {
+        if ($columns) {
+            if ($result) {
+                foreach ($result as $rs => $r) {
                     if (!in_array($rs, $columns))
                         unset($result->$rs);
                 }
