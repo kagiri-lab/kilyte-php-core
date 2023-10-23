@@ -27,7 +27,11 @@ class Router
     {
         foreach ($paths as $url => $func) {
             $this->addMiddleWareArray($func, $auth);
-            $this->routeMap['get'][trim($route) . trim($url)] = [$callback, $func];
+            if ($route)
+                $route = trim($route);
+            if ($url)
+                $url = trim($url);
+            $this->routeMap['get'][$route . $url] = [$callback, $func];
         }
     }
 
